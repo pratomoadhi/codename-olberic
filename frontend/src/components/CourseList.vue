@@ -8,6 +8,7 @@
                 <div class="course-card-header">
                     <h3 class="course-title">{{ course.title }}</h3>
                     <div class="course-actions">
+                        <button @click="enrollCourse(course.id)" class="btn-enroll">Enroll</button>
                         <button @click="editCourse(course)" class="btn-edit">Edit</button>
                         <button @click="deleteCourse(course.id)" class="btn-delete">Delete</button>
                     </div>
@@ -17,7 +18,6 @@
         </div>
         <p v-else class="no-courses">No courses available.</p>
 
-        <!-- Modal for creating/editing courses -->
         <div v-if="showModal" class="modal">
             <div class="modal-content">
                 <h2>{{ editingCourse ? 'Edit' : 'Create' }} Course</h2>
@@ -96,6 +96,22 @@ export default {
                 .catch(error => {
                     console.error('There was an error deleting the course:', error);
                 });
+        },
+        enrollCourse(courseId) {
+            // Implement your enroll course logic here
+            // console.log(`Enrolling in course with ID: ${courseId}`);
+            alert(`Enrolling in course with ID: ${courseId}`);
+            // You would typically make an API call to enroll the user in the course
+            // Example:
+            // axios.post(`http://localhost:8000/api/enrollments/`, { course: courseId })
+            //   .then(response => {
+            //     console.log('Successfully enrolled:', response.data);
+            //     // Optionally update the UI to reflect enrollment
+            //   })
+            //   .catch(error => {
+            //     console.error('Error enrolling in course:', error);
+            //     // Optionally display an error message to the user
+            //   });
         }
     },
     mounted() {
@@ -159,11 +175,9 @@ export default {
     font-size: 1.5rem;
     font-weight: bold;
     color: #333;
-    /* Ensure text is visible */
 }
 
 .course-actions button {
-    background-color: #f0ad4e;
     color: white;
     border: none;
     padding: 5px 10px;
@@ -172,11 +186,20 @@ export default {
     margin-left: 5px;
 }
 
-.course-actions .btn-edit {
+.btn-enroll {
+    background-color: #673ab7;
+    /* Indigo color */
+}
+
+.btn-enroll:hover {
+    background-color: #512da8;
+}
+
+.btn-edit {
     background-color: #5bc0de;
 }
 
-.course-actions .btn-delete {
+.btn-delete {
     background-color: #d9534f;
 }
 

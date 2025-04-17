@@ -1,7 +1,17 @@
+from django.contrib.auth.models import User
 from rest_framework import viewsets
-from rest_framework.permissions import IsAuthenticated
-from .models import Course, Enrollment
-from .serializers import CourseSerializer, EnrollmentSerializer
+from rest_framework.permissions import IsAuthenticated, IsAdminUser
+from rest_framework_simplejwt.views import TokenObtainPairView
+from .models import User, Course, Enrollment
+from .serializers import CustomTokenObtainPairSerializer, UserSerializer, CourseSerializer, EnrollmentSerializer
+
+class CustomTokenObtainPairView(TokenObtainPairView):
+    serializer_class = CustomTokenObtainPairSerializer
+
+class UserViewSet(viewsets.ModelViewSet):
+    queryset = User.objects.all()
+    serializer_class = UserSerializer
+    permission_classes = [IsAdminUser]
 
 class CourseViewSet(viewsets.ModelViewSet):
     queryset = Course.objects.all()
